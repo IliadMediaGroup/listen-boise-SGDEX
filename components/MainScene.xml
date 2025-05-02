@@ -4,7 +4,6 @@
   <script type="text/brightscript" uri="pkg:/source/SGDEX.brs" />
   
   <children>
-    <!-- Background Poster -->
     <Poster
       id="backgroundPoster"
       uri="pkg:/images/background.png"
@@ -12,7 +11,6 @@
       height="1080"
       translation="[0, 0]" />
     
-    <!-- Navigation Menu -->
     <Group id="navMenu" translation="[50, 50]">
       <LabelList
         id="menuList"
@@ -29,10 +27,8 @@
       </LabelList>
     </Group>
     
-    <!-- View Container -->
     <Group id="viewContainer" translation="[300, 50]" />
     
-    <!-- Playback Card (Hidden Initially) -->
     <Group id="playbackCard" translation="[0, 900]" visible="false">
       <Rectangle
         id="cardBackground"
@@ -48,12 +44,28 @@
         text="Now Playing: "
         font="font:MediumSystemFont"
         color="0xFFFFFFFF" />
+      <Rectangle
+        id="progressBar"
+        translation="[50, 110]"
+        width="1000"
+        height="10"
+        color="0xFF0000FF"
+        opacity="0.5"
+        visible="false" />
       <Button
-        id="controlButton"
+        id="playPauseButton"
         translation="[1100, 50]"
+        text="Pause"
+        iconUri=""
+        focusBitmapUri="pkg:/images/button_focus.png"
+        minWidth="100"
+        visible="false" />
+      <Button
+        id="stopButton"
+        translation="[1250, 50]"
         text="Stop"
         iconUri=""
-        focusBitmapUri=""
+        focusBitmapUri="pkg:/images/button_focus.png"
         minWidth="100" />
     </Group>
   </children>

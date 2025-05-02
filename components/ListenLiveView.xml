@@ -1,0 +1,10 @@
+<GridView
+  id="stationGrid"
+  translation="[0, 0]"
+  posterGridSpacing="[20, 20]"
+  itemSize="[400, 300]"
+  numColumns="4"
+  numRows="2"
+  focusBitmapUri="pkg:/images/focus_grid.png"
+  rowItemAspectRatio="4:3"
+  wrapAround="true" />
