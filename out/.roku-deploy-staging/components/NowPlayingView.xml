@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="NowPlayingView" extends="Group">
+  <script type="text/brightscript" uri="pkg:/components/NowPlayingView.brs" />
+  <children>
+    <Video
+      id="videoPlayer"
+      translation="[0, 0]"
+      width="1920"
+      height="1080"
+      visible="false" />
+    
+    <Group id="metadataGroup" translation="[300, 200]" visible="false">
+      <Poster
+        id="albumArt"
+        width="400"
+        height="400"
+        translation="[0, 0]" />
+      <Label
+        id="titleLabel"
+        translation="[450, 0]"
+        width="1000"
+        height="50"
+        font="font:MediumBoldSystemFont"
+        color="0xFFFFFFFF" />
+      <Label
+        id="artistLabel"
+        translation="[450, 60]"
+        width="1000"
+        height="50"
+        font="font:MediumSystemFont"
+        color="0xFFFFFFFF" />
+      <Label
+        id="albumLabel"
+        translation="[450, 120]"
+        width="1000"
+        height="50"
+        font="font:MediumSystemFont"
+        color="0xFFFFFFFF" />
+    </Group>
+  </children>
+</component>
