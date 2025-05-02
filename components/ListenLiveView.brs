@@ -52,7 +52,7 @@ sub onGridItemSelected()
     playbackCard.visible = true
     nowPlayingLabel = m.top.getScene().findNode("nowPlayingLabel")
     nowPlayingLabel.text = "Now Playing: " + item.title
-    controlButton = m.top.getScene().findNode("controlButton")
+    controlButton = m.top.getScene().findNode("stopButton")
     controlButton.text = "Stop"
 end sub
 

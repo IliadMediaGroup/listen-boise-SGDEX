@@ -14,15 +14,27 @@ sub fetchMetadata()
             xml = CreateObject("roXMLElement")
             if xml.Parse(response)
                 metadata = {}
-                ' Adjust parsing based on actual XML structure
-                if xml.nowPlaying <> invalid
-                    metadata.artist = xml.nowPlaying.artist.GetText()
-                    metadata.song = xml.nowPlaying.song.GetText()
-                    metadata.album = xml.nowPlaying.album.GetText()
+                nowPlaying = xml.GetNamedElements("nowplaying")
+                if nowPlaying.Count() > 0
+                    metadata.artist = nowPlaying[0].GetNamedElements("artist").GetText()
+                    metadata.song = nowPlaying[0].GetNamedElements("song").GetText()
+                    metadata.album = nowPlaying[0].GetNamedElements("album").GetText()
+                    metadata.albumArt = nowPlaying[0].GetNamedElements("albumart").GetText()
+                else
+                    metadata.artist = xml.GetChildElements().GetNamedElements("artist").GetText()
+                    metadata.song = xml.GetChildElements().GetNamedElements("title").GetText()
+                    metadata.album = xml.GetChildElements().GetNamedElements("album").GetText()
+                    metadata.albumArt = xml.GetChildElements().GetNamedElements("image").GetText()
                 end if
+                if metadata.artist = "" then metadata.artist = "Unknown Artist"
+                if metadata.song = "" then metadata.song = "Unknown Song"
+                if metadata.album = "" then metadata.album = "Unknown Album"
+                if metadata.albumArt = "" then metadata.albumArt = ""
                 m.top.metadata = metadata
+            else
+                m.top.metadata = {artist: "Unknown", song: "Unknown", album: "Unknown", albumArt: ""}
             end if
         end if
-        sleep(5000) ' Fetch every 5 seconds
+        sleep(5000)
     end while
 end sub

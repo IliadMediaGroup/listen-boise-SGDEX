@@ -11,6 +11,15 @@
       height="1080"
       translation="[0, 0]" />
     
+    <Group id="navOverlay" translation="[50, 50]">
+      <Rectangle
+        id="navBackground"
+        width="250"
+        height="1080"
+        color="0x000000"
+        opacity="0.5" />
+    </Group>
+    
     <Group id="navMenu" translation="[50, 50]">
       <LabelList
         id="menuList"

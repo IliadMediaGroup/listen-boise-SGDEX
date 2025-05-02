@@ -81,7 +81,6 @@ sub onPlaybackStateChange()
     else if m.video.state = "playing" or m.video.state = "paused"
         m.playbackCard.visible = true
         updatePlaybackCard()
-        ' Set focus to playback card buttons
         if m.playPauseButton.visible
             m.playPauseButton.setFocus(true)
         else

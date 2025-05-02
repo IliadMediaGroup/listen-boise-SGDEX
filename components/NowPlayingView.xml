@@ -2,7 +2,6 @@
 <component name="NowPlayingView" extends="Group">
   <script type="text/brightscript" uri="pkg:/components/NowPlayingView.brs" />
   <children>
-    <!-- Video Player (for podcasts) -->
     <Video
       id="videoPlayer"
       translation="[0, 0]"
@@ -10,7 +9,6 @@
       height="1080"
       visible="false" />
     
-    <!-- Metadata Group (for radio) -->
     <Group id="metadataGroup" translation="[300, 200]" visible="false">
       <Poster
         id="albumArt"
