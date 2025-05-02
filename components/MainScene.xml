@@ -1,81 +1,13 @@
-<?xml version="1.0" encoding="utf-8" ?>
 <component name="MainScene" extends="Scene" initialFocus="navMenu">
   <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
-  <script type="text/brightscript" uri="pkg:/source/SGDEX.brs" />
-  
   <children>
-    <Poster
-      id="backgroundPoster"
-      uri="pkg:/images/background.png"
-      width="1920"
-      height="1080"
-      translation="[0, 0]" />
-    
-    <Group id="navOverlay" translation="[50, 50]">
-      <Rectangle
-        id="navBackground"
-        width="250"
-        height="1080"
-        color="0x000000"
-        opacity="0.5" />
-    </Group>
-    
-    <Group id="navMenu" translation="[50, 50]">
-      <LabelList
-        id="menuList"
-        itemSize="[200, 50]"
-        itemSpacing="[0, 20]"
-        color="0xFFFFFFFF"
-        focusedColor="0xFF0000FF"
-        font="font:MediumBoldSystemFont">
-        <ContentNode role="content">
-          <ContentNode title="Listen Live" />
-          <ContentNode title="Podcasts" />
-          <ContentNode title="Now Playing" />
-        </ContentNode>
-      </LabelList>
-    </Group>
-    
-    <Group id="viewContainer" translation="[300, 50]" />
-    
-    <Group id="playbackCard" translation="[0, 900]" visible="false">
-      <Rectangle
-        id="cardBackground"
-        width="1920"
-        height="180"
-        color="0x80000000"
-        opacity="0.8" />
-      <Label
-        id="nowPlayingLabel"
-        translation="[50, 50]"
-        width="1000"
-        height="50"
-        text="Now Playing: "
-        font="font:MediumSystemFont"
-        color="0xFFFFFFFF" />
-      <Rectangle
-        id="progressBar"
-        translation="[50, 110]"
-        width="1000"
-        height="10"
-        color="0xFF0000FF"
-        opacity="0.5"
-        visible="false" />
-      <Button
-        id="playPauseButton"
-        translation="[1100, 50]"
-        text="Pause"
-        iconUri=""
-        focusBitmapUri="pkg:/images/button_focus.png"
-        minWidth="100"
-        visible="false" />
-      <Button
-        id="stopButton"
-        translation="[1250, 50]"
-        text="Stop"
-        iconUri=""
-        focusBitmapUri="pkg:/images/button_focus.png"
-        minWidth="100" />
+    <Rectangle id="navBackground" width="250" height="1080" color="0x000000FF" />
+    <List id="menuList" translation="[50, 50]" width="200" />
+    <Group id="viewContainer" translation="[300, 0]" />
+    <Group id="playbackCard" translation="[300, 900]" visible="false">
+      <Label id="nowPlayingLabel" width="1000" height="50" text="Now Playing: " />
+      <Button id="playPauseButton" width="100" height="50" text="Play" visible="false" />
+      <Button id="stopButton" width="100" height="50" text="Stop" />
     </Group>
   </children>
 </component>

@@ -2,7 +2,7 @@
 <component name="MetadataTask" extends="Task">
   <script type="text/brightscript" uri="pkg:/components/MetadataTask.brs" />
   <interface>
-    <field id="xmlUrl" type="string" />
+    <field id="jsonUrl" type="string" />
     <field id="metadata" type="assocarray" />
   </interface>
 </component>

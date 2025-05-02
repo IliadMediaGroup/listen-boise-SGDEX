@@ -1,10 +1,17 @@
 sub init()
+    print "MainScene init start"
     m.navMenu = m.top.findNode("menuList")
+    print "navMenu: "; m.navMenu
     m.viewContainer = m.top.findNode("viewContainer")
+    print "viewContainer: "; m.viewContainer
     m.playbackCard = m.top.findNode("playbackCard")
+    print "playbackCard: "; m.playbackCard
     m.nowPlayingLabel = m.top.findNode("nowPlayingLabel")
+    print "nowPlayingLabel: "; m.nowPlayingLabel
     m.playPauseButton = m.top.findNode("playPauseButton")
+    print "playPauseButton: "; m.playPauseButton
     m.stopButton = m.top.findNode("stopButton")
+    print "stopButton: "; m.stopButton
     
     ' Initialize global media player
     m.video = CreateObject("roSGNode", "Video")
@@ -14,22 +21,34 @@ sub init()
     m.video.height = 1080
     m.top.appendChild(m.video)
     m.video.observeField("state", "onPlaybackStateChange")
+    print "video: "; m.video
     
     ' Initialize metadata task
     m.metadataTask = CreateObject("roSGNode", "MetadataTask")
     m.metadataTask.observeField("metadata", "onMetadataUpdate")
+    print "metadataTask: "; m.metadataTask
     
     ' Set up observers
     m.navMenu.observeField("itemSelected", "onMenuItemSelected")
     m.playPauseButton.observeField("buttonSelected", "onPlayPauseButton")
     m.stopButton.observeField("buttonSelected", "onStopButton")
     
-    ' Initialize SGDEX
-    SGDEX_Init()
-    
     ' Load initial view
     showListenLiveView()
+    
+    ' Initialize SGDEX with fallback
+    print "Calling SGDEX_Init"
+    if GetInterface(SGDEX_Init, "ifFunction") <> invalid
+        SGDEX_Init()
+        print "SGDEX_Init complete"
+    else
+        print "SGDEX_Init not available, skipping"
+    end if
 end sub
+
+function GetSceneName() as String
+    return "MainScene"
+end function
 
 sub onMenuItemSelected()
     selectedIndex = m.navMenu.itemSelected
@@ -121,6 +140,10 @@ sub updatePlaybackCard()
     if content <> invalid
         isVideo = content.getFields().isVideo = true
         m.playPauseButton.visible = isVideo
-        m.playPauseButton.text = m.video.state = "playing" ? "Pause" : "Play"
+        if m.video.state = "playing"
+            m.playPauseButton.text = "Pause"
+        else
+            m.playPauseButton.text = "Play"
+        end if
     end if
 end sub
