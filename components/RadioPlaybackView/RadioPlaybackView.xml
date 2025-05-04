@@ -1,66 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="RadioPlaybackView" extends="MediaView">
-  <interface>
-    <field id="content" type="node" onChange="onContentSet" />
-  </interface>
-  <script type="text/brightscript" uri="pkg:/components/RadioPlaybackView.brs" />
-  <children>
-    <Rectangle
-      id="background"
-      width="1280"
-      height="720"
-      color="0x000000FF"
-    />
-    <Poster
-      id="poster"
-      width="300"
-      height="300"
-      translation="[100, 100]"
-      loadDisplayMode="scaleToFit"
-    />
-    <Label
-      id="title"
-      width="300"
-      height="40"
-      translation="[100, 420]"
-      horizAlign="center"
-      vertAlign="center"
-    >
-      <Font
-        id="font"
-        size="24"
-      />
-    </Label>
-    <Label
-      id="metadata"
-      width="700"
-      height="100"
-      translation="[500, 100]"
-      wrap="true"
-    >
-      <Font
-        id="metadataFont"
-        size="20"
-      />
-    </Label>
-    <MediaView
-      id="mediaView"
-      width="1280"
-      height="720"
-      translation="[0, 0]"
-    />
-    <ButtonBar
-      id="buttonBar"
-      translation="[100, 600]"
-      visible="true"
-    >
-      <RowList
-        id="buttonList"
-        translation="[0, 0]"
-        itemSize="[100, 50]"
-        itemSpacing="[10, 0]"
-        focusable="true"
-      />
-    </ButtonBar>
-  </children>
+    <interface>
+        <field id="content" type="node" onChange="onContentSet" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/RadioPlaybackView/RadioPlaybackView.brs" />
+    <children>
+        <ComponentController id="componentController" />
+    </children>
 </component>

@@ -1,34 +1,10 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="PodcastPlaybackView" extends="MediaView">
-  <interface>
-    <field id="content" type="node" onChange="onContentSet" />
-  </interface>
-  <script type="text/brightscript" uri="pkg:/components/PodcastPlaybackView.brs" />
-  <children>
-    <Rectangle
-      id="background"
-      width="1280"
-      height="720"
-      color="0x000000FF"
-    />
-    <MediaView
-      id="mediaView"
-      width="1280"
-      height="720"
-      translation="[0, 0]"
-    />
-    <ButtonBar
-      id="buttonBar"
-      translation="[100, 600]"
-      visible="true"
-    >
-      <RowList
-        id="buttonList"
-        translation="[0, 0]"
-        itemSize="[100, 50]"
-        itemSpacing="[10, 0]"
-        focusable="true"
-      />
-    </ButtonBar>
-  </children>
+    <interface>
+        <field id="content" type="node" onChange="onContentSet" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/PodcastPlaybackView/PodcastPlaybackView.brs" />
+    <children>
+        <ComponentController id="componentController" />
+    </children>
 </component>
