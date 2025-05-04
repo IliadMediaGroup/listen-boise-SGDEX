@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<component name="PodcastPlaybackView" extends="VideoView">
+<component name="PodcastPlaybackView" extends="MediaView">
   <interface>
     <field id="content" type="node" onChange="onContentSet" />
   </interface>
@@ -11,11 +11,24 @@
       height="720"
       color="0x000000FF"
     />
-    <Video
-      id="video"
+    <MediaView
+      id="mediaView"
       width="1280"
       height="720"
       translation="[0, 0]"
     />
+    <ButtonBar
+      id="buttonBar"
+      translation="[100, 600]"
+      visible="true"
+    >
+      <RowList
+        id="buttonList"
+        translation="[0, 0]"
+        itemSize="[100, 50]"
+        itemSpacing="[10, 0]"
+        focusable="true"
+      />
+    </ButtonBar>
   </children>
 </component>

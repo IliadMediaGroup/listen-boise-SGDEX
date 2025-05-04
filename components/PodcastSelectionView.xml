@@ -1,32 +1,39 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<component name="PodcastSelectionView" extends="Group">
+<component name="PodcastSelectionView" extends="GridView">
   <interface>
     <field id="content" type="node" onChange="onContentSet" />
     <field id="episodeSelected" type="node" />
   </interface>
   <script type="text/brightscript" uri="pkg:/components/PodcastSelectionView.brs" />
   <children>
-    <Rectangle
-      id="background"
-      width="1280"
-      height="720"
-      color="0x000000FF"
-    />
-    <MarkupList
+    <RowList
       id="seasonList"
-      translation="[100, 100]"
-      itemComponentName="SeasonItem"
-      itemSize="[200, 50]"
-      numRows="5"
-      itemSpacing="[0, 10]"
+      translation="[100, 50]"
+      focusable="true"
+      numRows="1"
+      itemSize="[300, 50]"
+      itemSpacing="[20, 0]"
     />
-    <MarkupGrid
+    <ZoomRowList
       id="episodeGrid"
-      translation="[350, 100]"
-      itemComponentName="EpisodeItem"
-      numColumns="3"
+      translation="[100, 150]"
+      focusable="true"
+      numColumns="4"
       itemSize="[300, 200]"
       itemSpacing="[20, 20]"
     />
+    <ButtonBar
+      id="buttonBar"
+      translation="[100, 600]"
+      visible="false"
+    >
+      <RowList
+        id="buttonList"
+        translation="[0, 0]"
+        itemSize="[100, 50]"
+        itemSpacing="[10, 0]"
+        focusable="true"
+      />
+    </ButtonBar>
   </children>
 </component>

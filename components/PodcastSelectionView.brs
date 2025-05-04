@@ -1,66 +1,94 @@
 Sub init()
-    print "PodcastSelectionView: Entering init"
+    print "PodcastPlaybackView: Entering init"
     
-    m.seasonList = m.top.findNode("seasonList")
-    m.episodeGrid = m.top.findNode("episodeGrid")
+    m.mediaView = m.top.findNode("mediaView")
+    m.buttonBar = m.top.findNode("buttonBar")
     
-    m.seasonList.observeField("itemSelected", "onSeasonSelected")
-    m.episodeGrid.observeField("itemSelected", "onEpisodeSelected")
+    if m.mediaView = invalid or m.buttonBar = invalid
+        print "PodcastPlaybackView: ERROR - One or more nodes not found"
+        return
+    end if
     
-    m.rssTask = createObject("roSGNode", "RSSTask")
-    m.rssTask.observeField("content", "onRSSContentFetched")
+    m.mediaView.observeField("state", "onMediaStateChange")
+    m.buttonBar.observeField("buttonSelected", "onButtonSelected")
     
-    m.seasonList.setFocus(true)
-    print "PodcastSelectionView: Focus set to seasonList"
+    configureButtonBar()
+    if m.buttonBar <> invalid
+        m.buttonBar.setFocus(true)
+    else
+        print "PodcastPlaybackView: ERROR - Cannot set focus, buttonBar invalid"
+    end if
+End Sub
+
+Sub configureButtonBar()
+    print "PodcastPlaybackView: Configuring ButtonBar"
+    if m.buttonBar = invalid
+        print "PodcastPlaybackView: ERROR - buttonBar is invalid"
+        return
+    end if
+    
+    buttons = []
+    for each btn in [
+        { title: "Play", id: "play" },
+        { title: "Pause", id: "pause" },
+        { title: "Next", id: "next" },
+        { title: "Previous", id: "previous" }
+    ]
+        btnNode = createObject("roSGNode", "ContentNode")
+        btnNode.title = btn.title
+        btnNode.id = btn.id
+        buttons.push(btnNode)
+    end for
+    m.buttonBar.buttons = buttons
 End Sub
 
 Sub onContentSet()
     content = m.top.content
     if content <> invalid
-        print "PodcastSelectionView: Content set - " + content.title
-        if content.rssUrl <> "" and content.rssUrl <> invalid
-            m.rssTask.url = content.rssUrl
-            m.rssTask.control = "RUN"
-            print "PodcastSelectionView: Started RSSTask for " + content.rssUrl
+        print "PodcastPlaybackView: Playing - " + content.title
+        contentNode = createObject("roSGNode", "ContentNode")
+        contentNode.update({
+            url: content.url,
+            title: content.title,
+            description: content.description,
+            streamFormat: "mp3",
+            contentType: "episode"
+        })
+        m.mediaView.content = contentNode
+        m.mediaView.isAudioMode = true
+        m.mediaView.control = "play"
+        if m.buttonBar <> invalid
+            m.buttonBar.setFocus(true)
         else
-            print "PodcastSelectionView: ERROR - Invalid rssUrl"
+            print "PodcastPlaybackView: ERROR - Cannot set focus, buttonBar invalid"
         end if
     else
-        print "PodcastSelectionView: ERROR - Invalid content"
+        print "PodcastPlaybackView: ERROR - Invalid content"
     end if
 End Sub
 
-Sub onRSSContentFetched()
-    print "PodcastSelectionView: RSS content fetched"
-    content = m.rssTask.content
-    if content <> invalid
-        m.seasonList.content = content
-        m.episodeGrid.content = content.getChild(0) ' Select first season
-        print "PodcastSelectionView: Loaded " + content.getChildCount().toStr() + " seasons"
-    else
-        print "PodcastSelectionView: ERROR - No RSS content"
-    end if
+Sub onMediaStateChange()
+    print "PodcastPlaybackView: Media state - " + m.mediaView.state
 End Sub
 
-Sub onSeasonSelected()
-    selected = m.seasonList.itemSelected
-    season = m.seasonList.content.getChild(selected)
-    if season <> invalid
-        print "PodcastSelectionView: Season selected - " + season.title
-        m.episodeGrid.content = season
-    else
-        print "PodcastSelectionView: ERROR - Invalid season"
+Sub onButtonSelected()
+    if m.buttonBar = invalid or m.buttonBar.buttons = invalid
+        print "PodcastPlaybackView: ERROR - Invalid buttonBar or buttons"
+        return
     end if
-End Sub
-
-Sub onEpisodeSelected()
-    selectedRow = m.episodeGrid.rowItemSelected[0]
-    selectedCol = m.episodeGrid.rowItemSelected[1]
-    episode = m.episodeGrid.content.getChild(selectedRow * m.episodeGrid.numColumns + selectedCol)
-    if episode <> invalid
-        print "PodcastSelectionView: Episode selected - " + episode.title
-        m.top.episodeSelected = episode
+    selectedButton = m.buttonBar.buttons[m.buttonBar.buttonSelected]
+    if selectedButton <> invalid
+        print "PodcastPlaybackView: Button selected - " + selectedButton.id
+        if selectedButton.id = "play"
+            m.mediaView.control = "play"
+        else if selectedButton.id = "pause"
+            m.mediaView.control = "pause"
+        else if selectedButton.id = "next"
+            print "PodcastPlaybackView: Next episode not implemented"
+        else if selectedButton.id = "previous"
+            print "PodcastPlaybackView: Previous episode not implemented"
+        end if
     else
-        print "PodcastSelectionView: ERROR - Invalid episode"
+        print "PodcastPlaybackView: ERROR - Invalid button selection"
     end if
 End Sub

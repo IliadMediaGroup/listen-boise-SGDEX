@@ -9,28 +9,43 @@ Sub init()
     m.rowList.visible = true
     print "MainMenuView: RowList visibility set to true"
     
-    m.contentManager = createObject("roSGNode", "ContentManager")
-    if m.contentManager = invalid
-        print "MainMenuView: ERROR - ContentManager creation failed"
-        return
+    m.componentController = m.top.findNode("componentController")
+    if m.componentController = invalid
+        ' Try to find ComponentController in parent scene
+        m.componentController = m.top.getScene().findNode("componentController")
+        if m.componentController = invalid
+            print "MainMenuView: ERROR - ComponentController not found"
+        end if
     end if
-    m.contentManager.callFunc("initializeContentManager", { view: m.top })
-    print "MainMenuView: ContentManager initialized"
     
     configureGrid()
-    loadContent()
+    m.rowList.observeField("rowItemSelected", "onItemSelected")
     m.rowList.setFocus(true)
     print "MainMenuView: Focus set to RowList"
+End Sub
+
+Sub show(args as Object)
+    print "MainMenuView: Showing view with args: " + FormatJson(args)
+    
+    if m.rowList = invalid
+        print "MainMenuView: ERROR - RowList is invalid in show"
+        m.rowList = m.top.findNode("RowList")
+        if m.rowList = invalid
+            print "MainMenuView: ERROR - Failed to find RowList node"
+            return
+        end if
+    end if
+    
+    loadContent()
+    m.rowList.visible = true
+    m.rowList.setFocus(true)
+    print "MainMenuView: RowList set to visible and focused in show"
 End Sub
 
 Sub configureGrid()
     print "MainMenuView: Configuring grid"
     
-    if m.top.callFunc("sgdex_setStyle", "standard") = invalid
-        print "MainMenuView: ERROR - sgdex_setStyle failed"
-    else
-        print "MainMenuView: sgdex_setStyle set to standard"
-    end if
+    m.top.callFunc("sgdex_setStyle", "standard")
     m.rowList.numColumns = 4
     m.rowList.itemSize = [300, 200]
     m.rowList.rowHeights = [200, 200, 450]
@@ -106,9 +121,9 @@ Sub addStation(row as Object, title as String, poster as String, streamUrl as St
     item = row.createChild("ContentNode")
     item.title = title
     item.HDPosterUrl = poster
-    item.streamUrl = streamUrl
+    item.url = streamUrl
     item.metadataUrl = metadataUrl
-    item.type = contentType
+    item.contentType = contentType
 End Sub
 
 Sub addPodcast(row as Object, title as String, poster as String, rssUrl as String, contentType as String)
@@ -117,17 +132,11 @@ Sub addPodcast(row as Object, title as String, poster as String, rssUrl as Strin
     item.title = title
     item.HDPosterUrl = poster
     item.rssUrl = rssUrl
-    item.type = contentType
+    item.contentType = contentType
 End Sub
 
 Sub onContentSet()
     print "MainMenuView: Content set"
-    if m.contentManager <> invalid
-        m.contentManager.callFunc("setContent", { content: m.top.content })
-        print "MainMenuView: ContentManager setContent called"
-    else
-        print "MainMenuView: ERROR - ContentManager invalid"
-    end if
     if m.rowList <> invalid
         m.rowList.content = m.top.content
         m.rowList.visible = true
@@ -137,22 +146,37 @@ Sub onContentSet()
     end if
 End Sub
 
+Sub onItemSelected()
+    print "MainMenuView: Item selected"
+    if m.rowList = invalid or m.rowList.content = invalid
+        print "MainMenuView: ERROR - Invalid RowList or content"
+        return
+    end if
+    
+    selectedRow = m.rowList.rowItemSelected[0]
+    selectedCol = m.rowList.rowItemSelected[1]
+    selectedItem = m.rowList.content.getChild(selectedRow).getChild(selectedCol)
+    
+    if selectedItem <> invalid
+        print "MainMenuView: Selected - " + selectedItem.title
+        if m.componentController <> invalid
+            if selectedItem.contentType = "station"
+                m.componentController.callFunc("showView", { view: "RadioPlaybackView", args: { content: selectedItem } })
+            else if selectedItem.contentType = "podcast"
+                m.componentController.callFunc("showView", { view: "PodcastLandingView", args: { content: selectedItem } })
+            end if
+        else
+            print "MainMenuView: ERROR - ComponentController invalid"
+        end if
+        m.top.selection = selectedItem
+    else
+        print "MainMenuView: ERROR - Invalid selection"
+    end if
+End Sub
+
 Function onKeyEvent(key as String, press as Boolean) as Boolean
     print "MainMenuView: Key event - " + key + ", press: " + press.toStr()
-    handled = false
-    if press and key = "OK"
-        selectedRow = m.rowList.rowItemSelected[0]
-        selectedCol = m.rowList.rowItemSelected[1]
-        content = m.top.content.getChild(selectedRow).getChild(selectedCol)
-        if content <> invalid
-            print "MainMenuView: Selected - " + content.title
-            m.top.selection = content
-            handled = true
-        else
-            print "MainMenuView: ERROR - Invalid selection"
-        end if
-    end if
-    return handled
+    return false
 End Function
 
 Function ifElse(condition as Boolean, trueValue as Dynamic, falseValue as Dynamic) as Dynamic

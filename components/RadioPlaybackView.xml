@@ -43,5 +43,24 @@
         size="20"
       />
     </Label>
+    <MediaView
+      id="mediaView"
+      width="1280"
+      height="720"
+      translation="[0, 0]"
+    />
+    <ButtonBar
+      id="buttonBar"
+      translation="[100, 600]"
+      visible="true"
+    >
+      <RowList
+        id="buttonList"
+        translation="[0, 0]"
+        itemSize="[100, 50]"
+        itemSpacing="[10, 0]"
+        focusable="true"
+      />
+    </ButtonBar>
   </children>
 </component>

@@ -1,45 +1,33 @@
-sub init()
+Function GetSceneName() as String
+    print "MainScene: GetSceneName called"
+    return "MainScene"
+End Function
+
+Sub init()
     print "MainScene: Entering init"
     
-    m.global = m.top.getScene().global
-    if m.global = invalid
-        print "MainScene: ERROR - Global node invalid"
+    m.componentController = m.top.findNode("componentController")
+    if m.componentController = invalid
+        print "MainScene: ERROR - ComponentController not found"
         return
     end if
+    print "MainScene: ComponentController found"
     
-    m.viewStack = createObject("roSGNode", "ViewStack")
-    if m.viewStack = invalid
-        print "MainScene: ERROR - ViewStack creation failed"
+    m.viewManager = m.componentController.callFunc("getViewManager")
+    if m.viewManager = invalid
+        print "MainScene: ERROR - ViewManager initialization failed"
         return
     end if
-    m.top.appendChild(m.viewStack)
-    print "MainScene: ViewStack created and appended"
+    print "MainScene: ViewManager initialized"
     
-    showMainMenuView()
-end sub
+    showMainMenu()
+End Sub
 
-sub showMainMenuView()
+Sub showMainMenu()
     print "MainScene: Showing MainMenuView"
-    
-    mainMenuView = createObject("roSGNode", "MainMenuView")
-    if mainMenuView = invalid
-        print "MainScene: ERROR - MainMenuView creation failed"
-        return
+    if m.componentController <> invalid
+        m.componentController.callFunc("showView", { view: "MainMenuView", args: {} })
+    else
+        print "MainScene: ERROR - ComponentController invalid"
     end if
-    
-    m.viewStack.callFunc("pushView", mainMenuView)
-    print "MainScene: MainMenuView pushed to ViewStack"
-    
-    mainMenuView.setFocus(true)
-    print "MainScene: Focus set to MainMenuView"
-end sub
-
-function onKeyEvent(key as String, press as Boolean) as Boolean
-    print "MainScene: Key event - " + key + ", press: " + press.toStr()
-    handled = false
-    if press and key = "back"
-        print "MainScene: Back key pressed, ignoring to prevent exit"
-        handled = true
-    end if
-    return handled
-end function
+End Sub
