@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="PodcastLandingView" extends="DetailsView">
+  <interface>
+    <field id="content" type="node" onChange="onContentSet" />
+    <field id="action" type="assocarray" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/components/PodcastLandingView.brs" />
+  <children>
+    <Rectangle
+      id="background"
+      width="1280"
+      height="720"
+      color="0x000000FF"
+    />
+    <Label
+      id="description"
+      width="700"
+      height="200"
+      translation="[100, 100]"
+      wrap="true"
+    >
+      <Font
+        id="font"
+        size="24"
+      />
+    </Label>
+    <ButtonGroup
+      id="buttons"
+      translation="[100, 350]"
+    >
+      <Button
+        id="playLatest"
+        text="Play Latest"
+        minWidth="200"
+      />
+      <Button
+        id="browse"
+        text="Browse"
+        minWidth="200"
+      />
+    </ButtonGroup>
+  </children>
+</component>

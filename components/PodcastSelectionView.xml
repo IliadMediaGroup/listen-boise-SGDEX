@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="PodcastSelectionView" extends="Group">
+  <interface>
+    <field id="content" type="node" onChange="onContentSet" />
+    <field id="episodeSelected" type="node" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/components/PodcastSelectionView.brs" />
+  <children>
+    <Rectangle
+      id="background"
+      width="1280"
+      height="720"
+      color="0x000000FF"
+    />
+    <MarkupList
+      id="seasonList"
+      translation="[100, 100]"
+      itemComponentName="SeasonItem"
+      itemSize="[200, 50]"
+      numRows="5"
+      itemSpacing="[0, 10]"
+    />
+    <MarkupGrid
+      id="episodeGrid"
+      translation="[350, 100]"
+      itemComponentName="EpisodeItem"
+      numColumns="3"
+      itemSize="[300, 200]"
+      itemSpacing="[20, 20]"
+    />
+  </children>
+</component>

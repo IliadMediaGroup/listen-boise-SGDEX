@@ -1,13 +1,10 @@
-<component name="MainScene" extends="Scene" initialFocus="navMenu">
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MainScene" extends="BaseScene">
+  <interface>
+    <field id="currentView" type="node" />
+  </interface>
   <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
   <children>
-    <Rectangle id="navBackground" width="250" height="1080" color="0x000000FF" />
-    <List id="menuList" translation="[50, 50]" width="200" />
-    <Group id="viewContainer" translation="[300, 0]" />
-    <Group id="playbackCard" translation="[300, 900]" visible="false">
-      <Label id="nowPlayingLabel" width="1000" height="50" text="Now Playing: " />
-      <Button id="playPauseButton" width="100" height="50" text="Play" visible="false" />
-      <Button id="stopButton" width="100" height="50" text="Stop" />
-    </Group>
+    <ComponentController id="componentController" />
   </children>
 </component>

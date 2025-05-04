@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="SeasonItem" extends="Group">
+  <interface>
+    <field id="itemContent" type="node" onChange="onContentChange" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/components/SeasonItem.brs" />
+  <children>
+    <Label
+      id="title"
+      width="200"
+      height="50"
+      horizAlign="center"
+      vertAlign="center"
+    >
+      <Font
+        id="font"
+        size="20"
+      />
+    </Label>
+  </children>
+</component>

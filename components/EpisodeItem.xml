@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="EpisodeItem" extends="Group">
+  <interface>
+    <field id="itemContent" type="node" onChange="onContentChange" />
+  </interface>
+  <script type="text/brightscript" uri="pkg:/components/EpisodeItem.brs" />
+  <children>
+    <Poster
+      id="poster"
+      width="300"
+      height="150"
+      translation="[0, 0]"
+      loadDisplayMode="scaleToFit"
+    />
+    <Label
+      id="title"
+      width="300"
+      height="50"
+      translation="[0, 150]"
+      horizAlign="center"
+      vertAlign="center"
+    >
+      <Font
+        id="font"
+        size="20"
+      />
+    </Label>
+  </children>
+</component>

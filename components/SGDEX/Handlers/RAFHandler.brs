@@ -1,7 +1,5 @@
 ' Copyright (c) 2018 Roku, Inc. All rights reserved.
 
-Library "Roku_Ads.brs"
-
 sub Init()
     m.top.functionname = "PlayContentWithFullRAFIntegration"
     m.top.ObserveFieldScoped("state", "OnStateChanged")
