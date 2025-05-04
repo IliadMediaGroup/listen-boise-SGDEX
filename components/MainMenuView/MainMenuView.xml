@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<component name="MainMenuView" extends="GridView">
+    <interface>
+        <field id="content" type="node" onChange="onContentSet" />
+        <field id="selection" type="node" />
+    </interface>
+    <script type="text/brightscript" uri="pkg:/components/MainMenuView/MainMenuView.brs" />
+    <children>
+        <Poster id="logo" uri="pkg:/images/listen_boise_logo.png" width="300" height="100" translation="[100, 50]" />
+        <ZoomRowList id="RowList" translation="[100, 200]" focusable="true" />
+        <ComponentController id="componentController" />
+    </children>
+</component>

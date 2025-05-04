@@ -13,21 +13,15 @@ Sub init()
     end if
     print "MainScene: ComponentController found"
     
-    m.viewManager = m.componentController.callFunc("getViewManager")
-    if m.viewManager = invalid
-        print "MainScene: ERROR - ViewManager initialization failed"
-        return
-    end if
-    print "MainScene: ViewManager initialized"
-    
     showMainMenu()
 End Sub
 
 Sub showMainMenu()
     print "MainScene: Showing MainMenuView"
-    if m.componentController <> invalid
-        m.componentController.callFunc("showView", { view: "MainMenuView", args: {} })
+    view = m.componentController.callFunc("showView", { view: "MainMenuView", args: {} })
+    if view = invalid
+        print "MainScene: ERROR - Failed to show MainMenuView"
     else
-        print "MainScene: ERROR - ComponentController invalid"
+        print "MainScene: MainMenuView shown successfully"
     end if
 End Sub

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <component name="MainScene" extends="BaseScene">
-  <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
-  <children>
-    <ComponentController id="componentController" />
-  </children>
+    <script type="text/brightscript" uri="pkg:/components/MainScene.brs" />
+    <children>
+        <ComponentController id="componentController" />
+    </children>
 </component>
